@@ -1,4 +1,4 @@
-**Huddle is Hiring!** We're always looking for talented Developers and Test Engineers. Visit http://www.huddle.com/careers for open vacancies now, or register your interest for the future.
+My version of PhantomCSS.
 
 PhantomCSS
 ==========
