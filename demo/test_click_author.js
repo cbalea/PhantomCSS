@@ -42,20 +42,20 @@ casper.viewport(1024, 768);
 
 // ---------------------------- ACTUAL TEST ACTIONS ---------------------------------------
 casper.then(function(){
-	phantomcss.screenshot('a.call-to-action-box-btn', 'go_to_store_button');
+	// phantomcss.screenshot('a.call-to-action-box-btn', 'go_to_store_button');
 	phantomcss.screenshot('div.author.author-compare-ver-3', 'author block');
 });
 
 casper.then(function(){
-	casper.click('a.call-to-action-box-btn');
+	casper.click('a.author-image-container');
 	
 	// wait while element is no longer visible
-	casper.waitWhileSelector('a.call-to-action-box-btn',
+	casper.waitWhileSelector('a.author-image-container',
 		function success(){
-			console.log('Google page loaded successfully');
+			console.log('Author page loaded successfully');
 		},
 		function timeout(){
-			casper.test.fail('!!! Google page not loaded');
+			casper.test.fail('!!! Author page not loaded');
 		},
 		7000
 	);
