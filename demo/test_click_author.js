@@ -42,8 +42,8 @@ casper.viewport(1024, 768);
 
 // ---------------------------- ACTUAL TEST ACTIONS ---------------------------------------
 casper.then(function(){
-	// phantomcss.screenshot('a.call-to-action-box-btn', 'go_to_store_button');
-	phantomcss.screenshot('div.author.author-compare-ver-3', 'author block');
+	phantomcss.screenshot('div.author.author-compare-ver-3', 'author block'); //PASS
+	// phantomcss.screenshot('a.author-image-container', 'author block');	//FAIL
 });
 
 casper.then(function(){
