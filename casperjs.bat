@@ -1,7 +1,8 @@
 @ECHO OFF
 
-REM *** delete old debug screen captures, as they are not overwritten automatically
+REM *** delete old screen captures, as they are not overwritten automatically
 del failures\fail.png /s /f /q  >nul 2>&1
+del screenshots\*.diff.png /s /f /q  >nul 2>&1
 del last_screen.png /s /f /q  >nul 2>&1
 
 
