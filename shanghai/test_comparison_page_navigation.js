@@ -2,11 +2,11 @@
 	Require and initialise PhantomCSS module
 	Paths are relative to CasperJs directory
 */
-var phantomcss = require('./../../phantomcss.js');
+var phantomcss = require('./../phantomcss.js');
 
 phantomcss.init(/*{
-	screenshotRoot: '/screenshots',
-	failedComparisonsRoot: '/failures'
+	screenshotRoot: './screenshots',
+	failedComparisonsRoot: './failures'
 	casper: specific_instance_of_casper,
 	libraryRoot: '/phantomcss',
 	fileNameGetter: function overide_file_naming(){},
@@ -41,11 +41,54 @@ casper.viewport(1024, 768);
 
 
 // ---------------------------- ACTUAL TEST ACTIONS ---------------------------------------
+
+var productImage = 'img.product-image'
+var buyButton = 'a.product-buy-button'
+
 casper.then(function(){
-	// column background color is captured together with the ribbon screenshot
-	phantomcss.screenshot('ol.compare-products-list > li:nth-child(2) > div > span.product-ribbon.promoted-gold', 'column1_ribbon');
-	phantomcss.screenshot('ol.compare-products-list > li:nth-child(3) > div > span.product-ribbon.promoted-gold', 'column2_ribbon');
-	phantomcss.screenshot('ol.compare-products-list > li:nth-child(4) > div > span.product-ribbon.promoted-gold', 'column3_ribbon');
+	casper.click(productImage);
+	
+	casper.waitWhileSelector(productImage,
+		function success(){
+			console.log('Product page loaded successfully');
+		},
+		function timeout(){
+			casper.test.fail('!!! Product page not loaded');
+		},
+		7000
+	);
+	
+});
+
+casper.then(function(){
+	casper.back();
+	
+	casper.waitForSelector(productImage,
+		function success(){
+			console.log('Comparison page loaded successfully');
+		},
+		function timeout(){
+			casper.test.fail('!!! Comparison page not loaded');
+		},
+		7000
+	);
+});
+
+
+casper.then(function(){
+	casper.click(buyButton);
+	
+	// wait for the popup to open after click
+	casper.waitForPopup('http://www.google',
+		function success(){
+			console.log('Buy page loaded successfully');
+		},
+		function timeout(){
+			casper.test.fail('!!! Buy page not loaded');
+		},
+		7000
+	);
+	
 });
 
 // ----------------------------------------------------------------------------------------------

@@ -2,11 +2,11 @@
 	Require and initialise PhantomCSS module
 	Paths are relative to CasperJs directory
 */
-var phantomcss = require('./../../phantomcss.js');
+var phantomcss = require('./../phantomcss.js');
 
 phantomcss.init(/*{
-	screenshotRoot: '/screenshots',
-	failedComparisonsRoot: '/failures'
+	screenshotRoot: './screenshots',
+	failedComparisonsRoot: './failures'
 	casper: specific_instance_of_casper,
 	libraryRoot: '/phantomcss',
 	fileNameGetter: function overide_file_naming(){},
@@ -31,7 +31,7 @@ phantomcss.init(/*{
 /*
 	The test scenario
 */
-casper.start( 'http://azaem-web1-test2.awsdev.telegraph.co.uk/best.html' );
+casper.start( 'http://azaem-web1-test2.awsdev.telegraph.co.uk/best/smartphones/apple-iphone-5s/' );
 
 casper.then(function(){
 	casper.capture('start.png');
@@ -42,28 +42,25 @@ casper.viewport(1024, 768);
 
 // ---------------------------- ACTUAL TEST ACTIONS ---------------------------------------
 casper.then(function(){
-	phantomcss.screenshot("h3.list-of-entities-item-headline a", 'element-title');
-	phantomcss.screenshot("a.list-of-entities-item-image-container", 'element-image');
-	phantomcss.screenshot("span.list-of-entities-item-body-rating-item-string", 'element-text');
+	phantomcss.screenshot('div.entity-property.component.entity-property-overall-rating', 'overall-rating');
+	phantomcss.screenshot('div.product-ribbon.promoted-gold', 'gold-ribbon');
 });
 
-
 casper.then(function(){
-	casper.click('div.list-of-entities-item-link');
+	casper.click('a.call-to-action-box-btn');
 	
-	// wait while element is no longer visible
-	casper.waitWhileSelector('div.list-of-entities-item-link',
+	// wait for the popup to open after click
+	casper.waitForPopup('http://www.google',
 		function success(){
-			console.log('Comparison page loaded successfully');
+			console.log('Store page loaded successfully');
 		},
 		function timeout(){
-			casper.test.fail('!!! Comparison page not loaded');
+			casper.test.fail('!!! Store page not loaded');
 		},
 		7000
 	);
 	
 });
-
 // ----------------------------------------------------------------------------------------------
 
 

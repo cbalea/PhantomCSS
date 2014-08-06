@@ -2,11 +2,11 @@
 	Require and initialise PhantomCSS module
 	Paths are relative to CasperJs directory
 */
-var phantomcss = require('./../../phantomcss.js');
+var phantomcss = require('./../phantomcss.js');
 
 phantomcss.init(/*{
-	screenshotRoot: '/screenshots',
-	failedComparisonsRoot: '/failures'
+	screenshotRoot: './screenshots',
+	failedComparisonsRoot: './failures'
 	casper: specific_instance_of_casper,
 	libraryRoot: '/phantomcss',
 	fileNameGetter: function overide_file_naming(){},
@@ -31,7 +31,7 @@ phantomcss.init(/*{
 /*
 	The test scenario
 */
-casper.start( 'http://azaem-web1-test2.awsdev.telegraph.co.uk/best/smartphones/apple-iphone-5s/' );
+casper.start( 'http://azaem-web1-test2.awsdev.telegraph.co.uk/best/smartphones/' );
 
 casper.then(function(){
 	casper.capture('start.png');
@@ -42,25 +42,12 @@ casper.viewport(1024, 768);
 
 // ---------------------------- ACTUAL TEST ACTIONS ---------------------------------------
 casper.then(function(){
-	phantomcss.screenshot('div.entity-property.component.entity-property-overall-rating', 'overall-rating');
-	phantomcss.screenshot('div.product-ribbon.promoted-gold', 'gold-ribbon');
+	// column background color is captured together with the ribbon screenshot
+	phantomcss.screenshot('ol.compare-products-list > li:nth-child(2) > div > span.product-ribbon.promoted-gold', 'column1_ribbon');
+	phantomcss.screenshot('ol.compare-products-list > li:nth-child(3) > div > span.product-ribbon.promoted-gold', 'column2_ribbon');
+	phantomcss.screenshot('ol.compare-products-list > li:nth-child(4) > div > span.product-ribbon.promoted-gold', 'column3_ribbon');
 });
 
-casper.then(function(){
-	casper.click('a.call-to-action-box-btn');
-	
-	// wait for the popup to open after click
-	casper.waitForPopup('http://www.google',
-		function success(){
-			console.log('Store page loaded successfully');
-		},
-		function timeout(){
-			casper.test.fail('!!! Store page not loaded');
-		},
-		7000
-	);
-	
-});
 // ----------------------------------------------------------------------------------------------
 
 
