@@ -31,7 +31,7 @@ casper.
 
 From the command line/terminal run
 
-* `casperjs test shanghai/test*.js`
+* `casperjs test demo/test*.js`
 
 ### Download
 
